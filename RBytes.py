@@ -148,6 +148,9 @@ class RBytes:
         for i in range(len(a)-1,-1,-1):
             to_return = int_byte(a[i] & b[i]) + to_return
 
+    def __bytes__(self):
+        return self._bytes
+
 
 
     
@@ -158,6 +161,7 @@ if __name__ == '__main__':
 
 
     bts = RBytes(b'\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x01')
+    print(bytes(bts))
     #beg = time.time()
     check = bts<<40
     #delta = time.time()-beg
