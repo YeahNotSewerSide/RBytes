@@ -148,6 +148,69 @@ class RBytes:
         for i in range(len(a)-1,-1,-1):
             to_return = int_byte(a[i] & b[i]) + to_return
 
+        return RBytes(to_return)
+
+
+    def __or__(a,b):
+        if type(a) != RBytes or type(b)!= RBytes:
+            raise TypeError('Unsupported types of operands')
+        to_return = b''
+        
+        if len(b)>len(a):
+            buf = a
+            a = b
+            b = buf
+
+        buf = b'\x00'*(len(a)-len(b)) + b._bytes
+        b = RBytes(buf)
+
+        for i in range(len(a)-1,-1,-1):
+            to_return = int_byte(a[i] | b[i]) + to_return
+
+        return RBytes(to_return)
+
+    def __xor__(a,b):
+        
+        if type(a) != RBytes or type(b)!= RBytes:
+            raise TypeError('Unsupported types of operands')
+        to_return = b''
+        
+        if len(b)>len(a):
+            buf = a
+            a = b
+            b = buf
+
+        buf = b'\x00'*(len(a)-len(b)) + b._bytes
+        b = RBytes(buf)
+
+        for i in range(len(a)-1,-1,-1):
+            to_return = int_byte(a[i] ^ b[i]) + to_return
+
+        return RBytes(to_return)
+
+    def __eq__(a,b):
+        if type(a) != RBytes or type(b)!= RBytes:
+            raise TypeError('Unsupported types of operands')
+        
+        
+        if len(b)>len(a):
+            buf = a
+            a = b
+            b = buf
+
+        buf = b'\x00'*(len(a)-len(b)) + b._bytes
+        b = RBytes(buf)
+
+        eq = True
+
+        for i in range(len(a)-1,-1,-1):
+            if a[i] != b[i]:
+                eq = False
+                break
+
+
+        return eq
+
     def __bytes__(self):
         return self._bytes
 
@@ -161,9 +224,11 @@ if __name__ == '__main__':
 
 
     bts = RBytes(b'\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x01')
+    
     print(bytes(bts))
     #beg = time.time()
     check = bts<<40
+    u = bts == bts1
     #delta = time.time()-beg
     bts1 = RBytes(b'\x01')
     new = bts + bts1
