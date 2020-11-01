@@ -50,7 +50,7 @@ class RBytes:
             buf = 0
             for i in range(len(self._bytes)):
                 to_return += int_byte((self._bytes[i]>>shift)+buf)
-                buf = self._bytes[i]&((0b11111111>>(8-shift)))
+                buf = (self._bytes[i]&((0b11111111>>(8-shift))))<<(8-shift)
         
         return RBytes(to_return)
 
