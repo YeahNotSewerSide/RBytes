@@ -43,7 +43,7 @@ class RBytes:
                 to_return = to_return>>8
             
             if orig_shift > (orig_shift//shift)*8:
-                shift = orig_shif - (orig_shift//shift)*8
+                shift = orig_shift - (orig_shift//shift)*8
                 to_return = to_return>>shift
             return to_return
         else:
@@ -70,14 +70,14 @@ class RBytes:
                 to_return = to_return<<8
             
             if orig_shift > (orig_shift//shift)*8:
-                shift = orig_shif - (orig_shift//shift)*8
+                shift = orig_shift - (orig_shift//shift)*8
                 to_return = to_return<<shift
             return to_return
         else:
             buf = 0
             for i in range(len(self._bytes)-1,-1,-1):
-                to_return = int_byte(((self._bytes[i]&(0b11111111>>shift))<<shift)+buf) + to_return            
-                buf = (self._bytes[i]&((0b11111111>>(8-shift))<<(8-shift)))>>(8-shift)               
+                to_return = int_byte(((self[i]&(0b11111111>>shift))<<shift)+buf) + to_return            
+                buf = (self[i]&((0b11111111>>(8-shift))<<(8-shift)))>>(8-shift)               
 
         return RBytes(to_return)
 
@@ -95,7 +95,7 @@ class RBytes:
                 to_return = to_return.unsized_lshift(8)               
             
             if orig_shift > (orig_shift//shift)*8:
-                shift = orig_shif - (orig_shift//shift)*8
+                shift = orig_shift - (orig_shift//shift)*8
                 to_return = to_return.unsized_lshift(shift)
             return to_return
         else:
@@ -221,9 +221,10 @@ class RBytes:
 
 if __name__ == '__main__':
     
+    
 
-
-    bts = RBytes(b'\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x01')
+    bts = RBytes(b'\x01')
+    bts >> 500
     
     print(bytes(bts))
     #beg = time.time()
