@@ -47,6 +47,7 @@ class RBytes:
                 to_return = to_return>>shift
             return to_return
         else:
+            buf = 0
             for i in range(len(self._bytes)):
                 to_return += int_byte((self._bytes[i]>>shift)+buf)
                 buf = self._bytes[i]&((0b11111111>>(8-shift))<<(8-shift))
@@ -223,8 +224,8 @@ if __name__ == '__main__':
     
     
 
-    bts = RBytes(b'\x01')
-    bts >> 500
+    bts = RBytes(b'@\x00\x00\x10\x00\x00\x01\x00')
+    data = bts >> 38
     
     print(bytes(bts))
     #beg = time.time()
